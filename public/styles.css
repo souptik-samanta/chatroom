@@ -1,0 +1,43 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+} body {
+    min-height: 100vh;
+    min-width: 100%;
+    background-color: #fafafa;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    font-family: 'Open Sans';
+} #user_panel {
+    display: flex;
+    height: 5cm;
+    width: 10cm;
+    background-color: #fff;
+    box-shadow: 0px 2px 4px 8px rgba(0,0,0,0.01);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 20px;
+} #user_panel input {
+    height: 0.7cm;
+    width: 80%;
+    font-family: 'Open Sans';
+    font-size: 12px;
+    text-align: center;
+    outline: none;
+} #user_panel button {
+    height: 0.7cm;
+    width: 80%;
+    font-family: 'Open Sans';
+    font-size: 12px;
+    text-align: center;
+    background-color: dodgerblue;
+    color: #fff;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
