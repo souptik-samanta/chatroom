@@ -1,0 +1,74 @@
+<!-- updates will be posted soon -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" type="text/css" href="/public/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket.IO chat</title>
+</head>
+<body>
+    <div id="user_panel">
+        <h3>Join Room</h3>
+        <input type="text" id="uname" placeholder="Your Name">
+        <input type="text" id="room" placeholder="Room Name">
+        <button onclick="emitUser()">Join Room</button>
+    </div>
+    <div id="message_area">
+        <div id="users_pane">
+            <ul></ul>
+        </div>
+        <div id="message_pane">
+            <div id="header">
+                <span></span>
+            </div>
+            <div id="messages">
+                <span></span>
+            </div>
+            <div id="send_message">
+                <form id="msgForm">
+                    <input type="text" name="" id="msgText">
+                    <button type="submit">></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io();
+
+    var form = document.querySelector("#msgForm");
+    var room;
+    var uname;
+
+    function emitUser() {
+        uname = document.getElementById("uname").value;
+        room = document.getElementById('room').value;
+
+        socket.emit('join', uname, room);
+        document.getElementById("user_panel").style.display = "none";
+        document.getElementById("message_area").style.display = "flex";
+        document.querySelector("#message_area #message_pane #header span").textContent = room;
+    }
+
+    socket.on('message', (sender, msg) => {
+       var elem = document.createElement("span");
+       elem.textContent = `${sender}: ${msg}`;
+       var breaker = document.createElement("br");
+       var breaker2 = document.createElement("br");
+       document.querySelector("#message_area #message_pane #messages").append(breaker);
+       document.querySelector("#message_area #message_pane #messages").append(breaker2);
+       document.querySelector("#message_area #message_pane #messages").append(elem);
+    })
+    
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        var messageText = document.getElementById("msgText").value;
+        socket.emit("newMessage", messageText, room, uname);
+    });
+</script>
+</html>
